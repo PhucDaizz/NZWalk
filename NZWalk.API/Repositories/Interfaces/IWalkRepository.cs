@@ -1,4 +1,5 @@
-﻿using NZWalk.API.Models.Domain;
+﻿using Microsoft.AspNetCore.Mvc;
+using NZWalk.API.Models.Domain;
 
 namespace NZWalk.API.Repositories.Interfaces
 {
@@ -6,7 +7,9 @@ namespace NZWalk.API.Repositories.Interfaces
     {
         Task<Walk> CreateAsync(Walk walk);
 
-        Task <List<Walk>> GetAllAsync();
+        Task <List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null, 
+                                    string? sortBy = null, bool isAsending = true,
+                                    int pageNumber = 1, int pageSize = 10);
 
         Task<Walk?> GetByIdAsync(Guid id);
 

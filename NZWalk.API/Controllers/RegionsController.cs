@@ -15,7 +15,6 @@ namespace NZWalk.API.Controllers
     // https://localhost:xxxx/api/regions
     [Route("api/[controller]")]
     [ApiController] 
-    [Authorize]
     public class RegionsController : ControllerBase
     {
         private readonly NZWalkDbContext nZWalkDbContext;
@@ -33,6 +32,7 @@ namespace NZWalk.API.Controllers
         // Get all regions
         // Get https://localhost:xxxx/api/regions
         [HttpGet]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAll()
         {
             // Get Data from database - domain model
@@ -62,6 +62,7 @@ namespace NZWalk.API.Controllers
         // Get https://localhost:xxxx/api/regions{id}
         [HttpGet]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             var regionDomain = await regionRepository.GetByIdAsync(id);
@@ -89,6 +90,7 @@ namespace NZWalk.API.Controllers
         // https://localhost:xxxx/api/regions
         [HttpPost]
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
 
@@ -123,6 +125,7 @@ namespace NZWalk.API.Controllers
         [HttpPut]
         [Route("{id:Guid}")]
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
             // Map Dto to Domain model
@@ -160,6 +163,7 @@ namespace NZWalk.API.Controllers
         // Delate Region
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer,Reader")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var regionDomainModel = await regionRepository.DeleteAsync(id);
@@ -183,3 +187,13 @@ namespace NZWalk.API.Controllers
 
     }
 }
+
+// reader
+
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJyZWFkZXJAbnp3YWxrcy5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJSZWFkZXIiLCJleHAiOjE3MjI0ODI2NzQsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcxMDQvIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzEwNC8ifQ.KD8zIC-wRZuYCPnULfkSgJavs2yuY1F1E8RdhZDXH9A
+
+// writer
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ3cml0ZXJAbnp3YWxrcy5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJXcml0ZXIiLCJleHAiOjE3MjI0ODI4MDEsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcxMDQvIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzEwNC8ifQ.PABfERYCAd1e1VD2qhO_yiqEFdSb-oaTEyJBx3YhRXQ
+
+// id 
+// cfa06ed2-bf65-4b65-93ed-c9d286ddb0de

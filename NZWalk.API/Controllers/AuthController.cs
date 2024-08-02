@@ -60,7 +60,7 @@ namespace NZWalk.API.Controllers
                 var checkPasswordResult = await userManager.CheckPasswordAsync(user, loginRequestDto.Password);
                 if (checkPasswordResult)
                 {
-                    // get roles for thí user
+                    // get roles for this user
                     var roles = await userManager.GetRolesAsync(user);
 
                     if (roles != null && roles.Any())

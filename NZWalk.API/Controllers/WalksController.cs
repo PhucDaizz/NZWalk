@@ -16,7 +16,9 @@ namespace NZWalk.API.Controllers
         private readonly NZWalkDbContext nZWalkDbContext;
         private readonly IWalkRepository walkRepository;
 
-        public WalksController(IMapper mapper, NZWalkDbContext nZWalkDbContext, IWalkRepository walkRepository)
+        public WalksController(IMapper mapper, 
+            NZWalkDbContext nZWalkDbContext, 
+            IWalkRepository walkRepository)
         {
             this.mapper = mapper;
             this.nZWalkDbContext = nZWalkDbContext;
